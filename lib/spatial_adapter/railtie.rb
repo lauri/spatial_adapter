@@ -2,7 +2,7 @@ module SpatialAdapter
   class Railtie < Rails::Railtie
     initializer "spatial_adapter.load_current_database_adapter" do
       ActiveSupport.on_load :active_record do
-        adapter = ActiveRecord::Base.configurations[Rails.env]['adapter']
+        adapter = ActiveRecord::Base.configurations[Rails.env]['adapter'] rescue "postgresql"
         begin
           require "spatial_adapter/#{adapter}"
         rescue LoadError
